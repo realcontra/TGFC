@@ -28,6 +28,7 @@ import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.net.HttpCookie;
 import java.net.SocketTimeoutException;
+import java.net.URI;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.util.List;
@@ -51,7 +52,6 @@ public class OkHttpHelper {
         client.setConnectTimeout(OkHttpHelper.NETWORK_TIMEOUT_SECS, TimeUnit.SECONDS);
         client.setReadTimeout(OkHttpHelper.NETWORK_TIMEOUT_SECS, TimeUnit.SECONDS);
         client.setWriteTimeout(OkHttpHelper.NETWORK_TIMEOUT_SECS, TimeUnit.SECONDS);
-
         cookieStore = new PersistentCookieStore(HiApplication.getAppContext());
         CookieManager cookieManager = new CookieManager(cookieStore, CookiePolicy.ACCEPT_ORIGINAL_SERVER);
         client.setCookieHandler(cookieManager);
@@ -68,6 +68,18 @@ public class OkHttpHelper {
 
     public static OkHttpHelper getInstance() {
         return SingletonHolder.INSTANCE;
+    }
+
+    public void setCookie(URI uri, HttpCookie cookie) {
+        cookieStore.add(uri, cookie);
+    }
+
+    public List<HttpCookie> getCookie() {
+        return cookieStore.getCookies();
+    }
+
+    public void clearCookie() {
+        cookieStore.removeAll();
     }
 
     private Request buildGetRequest(String url, Object tag) {

@@ -78,7 +78,7 @@ public class HiSettingsHelper {
 
     private String mUsername = "";
     private String mPassword = "";
-    private String mSecCodeVeriFy = "";
+    private String mRecaptchaToken = "";
     private String mSecQuestion = "";
     private String mSecAnswer = "";
     private String mUid = "";
@@ -255,16 +255,18 @@ public class HiSettingsHelper {
         return mPassword;
     }
 
-    public String getSecCodeVerify() { return mSecCodeVeriFy; }
-
     public void setPassword(String password) {
         mPassword = password;
         SharedPreferences.Editor editor = mSharedPref.edit();
         editor.putString(PERF_PASSWORD, password).apply();
     }
 
-    public void setSecCodeVerity(String secCodeVerity) {
-        mSecCodeVeriFy = secCodeVerity;
+    public void setReCaptchaToken(String token) {
+        mRecaptchaToken = token;
+    }
+
+    public String getReCaptchaToken() {
+        return mRecaptchaToken;
     }
 
     public String getUid() {
